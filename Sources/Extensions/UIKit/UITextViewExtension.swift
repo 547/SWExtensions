@@ -15,7 +15,9 @@ extension UITextView {
 extension UITextView {
     public func append(text: String, newLine: Bool = false) {
         if self.text == nil { self.text = "" }
-        self.text = "\(self.text)\(newLine ? "\n" : "")\(text)"
+        let middleText = newLine ? "\n" : ""
+        let oldText = self.text ?? ""
+        self.text = oldText + middleText + text
     }
     public func clean() {
         self.text = nil

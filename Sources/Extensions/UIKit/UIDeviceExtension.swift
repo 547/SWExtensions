@@ -21,7 +21,7 @@ extension UIDevice {
     }
     
     public static var device: ModelType {
-        var systemInfo = utSWame()
+        var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
         let identifier = machineMirror.children.reduce("") { identifier, element in

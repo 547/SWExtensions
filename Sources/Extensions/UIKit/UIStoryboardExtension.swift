@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIStoryboard {
-    public static func instantiateViewController<T>(fromStoryboard named: String, bundle: Bundle: Bundle.main, withClass type: AnyClass) -> T? {
+    public static func instantiateViewController<T>(fromStoryboard named: String, bundle: Bundle = Bundle.main, withClass type: AnyClass) -> T? {
         let storyboard = UIStoryboard(name: named, bundle: bundle)
         return storyboard.instantiateViewController(withIdentifier: String(describing: type)) as? T
     }

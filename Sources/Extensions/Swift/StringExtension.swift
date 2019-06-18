@@ -134,7 +134,7 @@ extension String {
         guard chars.count > 1, let firstChar = chars.first, !firstChar.isAllSpace(), let lastChar = chars.last else {
             return result
         }
-        SN.log("last char \(lastChar)")
+        print("last char \(lastChar)")
         guard lastChar.contains(point), !lastChar.hasPrefix(point), !lastChar.hasSuffix(point) else {
             return result
         }

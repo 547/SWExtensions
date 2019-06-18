@@ -10,7 +10,7 @@ import UIKit
 
 extension UIScreen {
     public static var size:CGSize {
-        let result = UIScreen.main.bound.size
+        let result = UIScreen.main.bounds.size
         return result
     }
     public static var width:CGFloat {
