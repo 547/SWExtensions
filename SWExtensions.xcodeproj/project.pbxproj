@@ -10,6 +10,8 @@
 		E6B9755022B8CF5100C21917 /* SWExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B9754622B8CF5100C21917 /* SWExtensions.framework */; };
 		E6B9755522B8CF5100C21917 /* SWExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9755422B8CF5100C21917 /* SWExtensionsTests.swift */; };
 		E6B9755722B8CF5100C21917 /* SWExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = E6B9754922B8CF5100C21917 /* SWExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E6B9756E22B8CFBA00C21917 /* Currency in Resources */ = {isa = PBXBuildFile; fileRef = E6B9756522B8CFBA00C21917 /* Currency */; };
+		E6B9756F22B8CFBA00C21917 /* Extensions in Resources */ = {isa = PBXBuildFile; fileRef = E6B9756622B8CFBA00C21917 /* Extensions */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		E6B9754F22B8CF5100C21917 /* SWExtensionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SWExtensionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B9755422B8CF5100C21917 /* SWExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWExtensionsTests.swift; sourceTree = "<group>"; };
 		E6B9755622B8CF5100C21917 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E6B9756522B8CFBA00C21917 /* Currency */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Currency; sourceTree = "<group>"; };
+		E6B9756622B8CFBA00C21917 /* Extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Extensions; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +57,7 @@
 		E6B9753C22B8CF5100C21917 = {
 			isa = PBXGroup;
 			children = (
-				E6B9754822B8CF5100C21917 /* SWExtensions */,
+				E6B9754822B8CF5100C21917 /* Sources */,
 				E6B9755322B8CF5100C21917 /* SWExtensionsTests */,
 				E6B9754722B8CF5100C21917 /* Products */,
 			);
@@ -68,13 +72,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E6B9754822B8CF5100C21917 /* SWExtensions */ = {
+		E6B9754822B8CF5100C21917 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E6B9756522B8CFBA00C21917 /* Currency */,
+				E6B9756622B8CFBA00C21917 /* Extensions */,
 				E6B9754922B8CF5100C21917 /* SWExtensions.h */,
 				E6B9754A22B8CF5100C21917 /* Info.plist */,
 			);
-			path = SWExtensions;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		E6B9755322B8CF5100C21917 /* SWExtensionsTests */ = {
@@ -177,6 +183,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6B9756F22B8CFBA00C21917 /* Extensions in Resources */,
+				E6B9756E22B8CFBA00C21917 /* Currency in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +358,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SWExtensions/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -375,6 +384,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SWExtensions/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
