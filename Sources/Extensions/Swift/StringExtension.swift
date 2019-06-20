@@ -163,3 +163,8 @@ extension String {
     }
 }
 
+extension String {
+    public var decimal: Decimal? {
+        return Decimal.init(string: self)
+    }
+}
