@@ -162,28 +162,4 @@ extension String {
         return nil
     }
 }
-extension String {
-//    public var md5: String {
-//        let length = Int(CC_MD5_DIGEST_LENGTH)
-//        var digest = [UInt8](repeating: 0, count: length)
-//
-//        if let d = self.data(using: .utf8) {
-//            _ = d.withUnsafeBytes { body in
-//                CC_MD5(body, CC_LONG(d.count), &digest)
-//            }
-//        }
-//        return (0..<length).reduce("") {
-//            $0 + String(format: "%02x", digest[$1])
-//        }
-//    }
-}
-extension String {
-    public var utf8Encoding: String? {
-        return addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-    }
-}
-extension String {
-    public var decimal: Decimal? {
-        return Decimal.init(string: self)
-    }
-}
+
