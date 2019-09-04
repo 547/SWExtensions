@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIViewController {
-    var isRootViewController: Bool{
+    public var isRootViewController: Bool{
         var result = false
         if let _ = navigationController, let viewControllers = navigationController?.viewControllers, viewControllers.count > 0, viewControllers[0].description == self.description{
             result = true
