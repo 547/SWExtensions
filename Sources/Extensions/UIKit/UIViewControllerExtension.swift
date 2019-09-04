@@ -9,6 +9,16 @@
 import UIKit
 
 extension UIViewController {
+    var isRootViewController: Bool{
+        var result = false
+        if let _ = navigationController, let viewControllers = navigationController?.viewControllers, viewControllers.count > 0, viewControllers[0].description == self.description{
+            result = true
+        }
+        return result
+    }
+}
+
+extension UIViewController {
     /// 隐藏下一个页面的导航栏返回按钮的标题
     public func hideBackButtonItemTitleForNextViewController(_ boolean: Bool) {
         if boolean {
