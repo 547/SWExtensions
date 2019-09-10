@@ -106,3 +106,16 @@ extension UIView {
         return nil
     }
 }
+extension UIView {
+    public func rounded(corners:UIRectCorner, frame:CGRect, cornerRadius:CGFloat = 0, backgroundColor:UIColor = UIColor.white, borderColor:UIColor? = nil, borderWidth:CGFloat = 0) -> () {
+        self.backgroundColor = UIColor.clear
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = frame
+        let path = UIBezierPath.init(roundedRect: maskLayer.bounds, byRoundingCorners: corners, cornerRadii: CGSize.init(width: cornerRadius, height: cornerRadius))
+        maskLayer.path = path.cgPath
+        maskLayer.strokeColor = borderColor?.cgColor
+        maskLayer.fillColor = backgroundColor.cgColor
+        maskLayer.lineWidth = borderWidth
+        layer.insertSublayer(maskLayer, at: 0)
+    }
+}
