@@ -31,11 +31,6 @@ extension String {
         let thirdPart   = substring(from: 7, to: 11)
         return "\(firstPart) \(secondPart) \(thirdPart)"
     }
-    
-    public init(fromDate date: Date, dateFormat format: String) {
-        let dateFormatter = DateFormatter(dateFormat: format)
-        self = dateFormatter.string(from: date)
-    }
 }
 
 extension String {
@@ -166,5 +161,21 @@ extension String {
 extension String {
     public var decimal: Decimal? {
         return Decimal.init(string: self)
+    }
+}
+
+
+extension String {
+    public init(fromDate date: Date, dateFormat format: String) {
+        let dateFormatter = DateFormatter(dateFormat: format)
+        self = dateFormatter.string(from: date)
+    }
+    public func date(fromDateFormat format: String) -> Date? {
+        let result = Date.init(fromString: self, dateFormat: format)
+        return result
+    }
+    public func timeIntervalSince1970(fromDateFormat format: String) -> TimeInterval? {
+        let result = Date.init(fromString: self, dateFormat: format)?.timestamp
+        return result
     }
 }
