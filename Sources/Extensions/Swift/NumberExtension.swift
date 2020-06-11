@@ -11,6 +11,7 @@ import Foundation
 public typealias Byte = UInt8
 
 extension Int {
+    public var string:     String  { return "\(self)"          }
     public var cgfloat:    CGFloat { return CGFloat(self)      }
     public var float:      Float   { return Float(self)        }
     public var double:     Double  { return Double(self)       }
@@ -19,6 +20,7 @@ extension Int {
     public var absolute:   Int     { return abs(self)          }
 }
 extension Float {
+    public var string:     String  { return "\(self)"          }
     public var cgfloat:    CGFloat { return CGFloat(self)      }
     public var int:        Int     { return Int(self)          }
     public var roundedInt: Int     { return Int(roundf(self))  }
@@ -27,6 +29,7 @@ extension Float {
     public var absolute:   Float   { return abs(self)          }
 }
 extension Double {
+    public var string:     String  { return "\(self)"      }
     public var cgfloat:    CGFloat { return CGFloat(self)  }
     public var int:        Int     { return Int(self)      }
     public var float:      Float   { return Float(self)    }
@@ -34,6 +37,7 @@ extension Double {
     public var absolute:   Double  { return abs(self)      }
 }
 extension Byte {
+    public var string:     String  { return "\(self)"      }
     public var cgfloat:    CGFloat { return CGFloat(self)  }
     public var int:        Int     { return Int(self)      }
 }
