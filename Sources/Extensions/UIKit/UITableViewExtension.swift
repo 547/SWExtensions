@@ -12,4 +12,19 @@ extension UITableView {
     public func dequeueReusableCell<T>(withIdentifier identifier: String, _ initClosure: (_ identifier: String) -> T) -> T {
         return dequeueReusableCell(withIdentifier: identifier) as? T ?? initClosure(identifier)
     }
+    
+    public func dequeueReusableHeaderFooterView<T>(withIdentifier identifier: String, _ initClosure: (_ identifier: String) -> T) -> T {
+        return (dequeueReusableHeaderFooterView(withIdentifier: identifier) as? T) ?? initClosure(identifier)
+    }
+}
+extension UITableView {
+    
+    /// reloadData 后执行某些操作
+    ///
+    /// - Parameter completion: reloadData 后执行的回调
+    public func reloadData(_ completion:(() -> ())? = nil) -> () {
+        reloadData()
+        layoutIfNeeded()
+        completion?()
+    }
 }
