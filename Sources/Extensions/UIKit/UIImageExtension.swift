@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIImage {
-    ///MARK:旋转图片
+    ///旋转图片
     public func rotate(orientation:UIImage.Orientation) -> UIImage? {
         guard let cgImage = cgImage else { return nil }
         return UIImage.init(cgImage: cgImage, scale: self.scale, orientation: orientation)
@@ -36,17 +36,53 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 }
-// MARK: Color pickers
 extension UIImage {
-    public func compressImage(memsize:Int, byteUnits:ByteUnits) -> Data?{
-        var compress:CGFloat = 0.4
+    /// 压缩图片
+    /// - Parameter maxSize: 以MB为单位
+    /// - Returns: 压缩后的图片
+    public func compressImage(maxSize:Int) -> UIImage?{
+        var result:UIImage? = nil
+        guard let data = compressImageData(maxSize: maxSize, byteUnits: .MB) else {
+            return result
+        }
+        result = UIImage(data: data)
+        return result
+    }
+    /// 压缩图片
+    /// - Parameter maxSize: 以MB为单位
+    /// - Returns: 压缩后的图片的data
+    public func compressImageData(maxSize:Int) -> Data?{
+        let result:Data? = compressImageData(maxSize: maxSize, byteUnits: .MB)
+        return result
+    }
+    
+    /// 压缩图片
+    /// - Parameters:
+    ///   - maxSize: 最大size的值
+    ///   - byteUnits: 最大size的单位
+    /// - Returns: 压缩后的图片
+    public func compressImage(maxSize:Int, byteUnits:ByteUnits) -> UIImage?{
+        var result:UIImage? = nil
+        guard let data = compressImageData(maxSize: maxSize, byteUnits: byteUnits) else {
+            return result
+        }
+        result = UIImage(data: data)
+        return result
+    }
+    /// 压缩图片
+    /// - Parameters:
+    ///   - maxSize: 最大size的值
+    ///   - byteUnits: 最大size的单位
+    /// - Returns: 压缩后的图片的data
+    public func compressImageData(maxSize:Int, byteUnits:ByteUnits) -> Data?{
+        var compress:CGFloat = 1.0
         var imageData:Data
         if let jpgData = self.jpegData(compressionQuality: compress) {
             imageData = jpgData
         } else if let pngData = self.pngData() {
             imageData = pngData
         } else { return nil }
-        let byteSize = byteUnits.getBytes(with: memsize)
+        let byteSize = byteUnits.getBytes(maxSize)
         while imageData.count > byteSize && compress > 0.000001 {
             compress -= 0.001
             guard let data = self.jpegData(compressionQuality: compress) else { break }
@@ -61,24 +97,24 @@ public enum ByteUnits:String {
     case MB = "m"
     case GB = "g"
     case TB = "t"
-    //MARK:转成byte
-    public func getBytes(with size:Int) -> Int {
+    ///转成byte
+    public func getBytes(_ value:Int) -> Int {
         let baseUnit = 1024.0
         switch self {
         case .B:
-            return size
+            return value
         case .KB:
-            return size * Int(baseUnit)
+            return value * Int(baseUnit)
         case .MB:
-            return size * Int(pow(baseUnit, 2.0))
+            return value * Int(pow(baseUnit, 2.0))
         case .GB:
-            return size * Int(pow(baseUnit, 3.0))
+            return value * Int(pow(baseUnit, 3.0))
         case .TB:
-            return size * Int(pow(baseUnit, 4.0))
+            return value * Int(pow(baseUnit, 4.0))
         }
     }
-    //MARK:向上转换
-    public func upwardConversion(with bytes:Int) -> Int {
+    ///向上转换
+    public func upwardConversion(_ bytes:Int) -> Int {
         let baseUnit = 1024.0
         switch self {
         case .B:
