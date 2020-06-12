@@ -37,26 +37,44 @@ extension UIImage {
     }
 }
 extension UIImage {
-    /// 压缩图片
-    /// - Parameter maxSize: 以MB为单位
+    /// 压缩图片(尽可能的将图片的size压缩到接近maxSize，可能结果会大于maxSize)
+    /// - Parameter maxKBSize: 以KB为单位
     /// - Returns: 压缩后的图片
-    public func compressImage(maxSize:Int) -> UIImage?{
+    public func compressImage(maxKBSize:Int) -> UIImage?{
         var result:UIImage? = nil
-        guard let data = compressImageData(maxSize: maxSize, byteUnits: .MB) else {
+        guard let data = compressImageData(maxKBSize: maxKBSize) else {
             return result
         }
         result = UIImage(data: data)
         return result
     }
-    /// 压缩图片
-    /// - Parameter maxSize: 以MB为单位
+    /// 压缩图片(尽可能的将图片的size压缩到接近maxSize，可能结果会大于maxSize)
+    /// - Parameter maxKBSize: 以KB为单位
     /// - Returns: 压缩后的图片的data
-    public func compressImageData(maxSize:Int) -> Data?{
-        let result:Data? = compressImageData(maxSize: maxSize, byteUnits: .MB)
+    public func compressImageData(maxKBSize:Int) -> Data?{
+        let result:Data? = compressImageData(maxSize: maxKBSize, byteUnits: .KB)
+        return result
+    }
+    /// 压缩图片(尽可能的将图片的size压缩到接近maxSize，可能结果会大于maxSize)
+    /// - Parameter maxMBSize: 以MB为单位
+    /// - Returns: 压缩后的图片
+    public func compressImage(maxMBSize:Int) -> UIImage?{
+        var result:UIImage? = nil
+        guard let data = compressImageData(maxMBSize: maxMBSize) else {
+            return result
+        }
+        result = UIImage(data: data)
+        return result
+    }
+    /// 压缩图片(尽可能的将图片的size压缩到接近maxSize，可能结果会大于maxSize)
+    /// - Parameter maxMBSize: 以MB为单位
+    /// - Returns: 压缩后的图片的data
+    public func compressImageData(maxMBSize:Int) -> Data?{
+        let result:Data? = compressImageData(maxSize: maxMBSize, byteUnits: .MB)
         return result
     }
     
-    /// 压缩图片
+    /// 压缩图片(尽可能的将图片的size压缩到接近maxSize，可能结果会大于maxSize)
     /// - Parameters:
     ///   - maxSize: 最大size的值
     ///   - byteUnits: 最大size的单位
@@ -69,26 +87,28 @@ extension UIImage {
         result = UIImage(data: data)
         return result
     }
-    /// 压缩图片
+    /// 压缩图片(尽可能的将图片的size压缩到接近maxSize，可能结果会大于maxSize)
     /// - Parameters:
     ///   - maxSize: 最大size的值
     ///   - byteUnits: 最大size的单位
     /// - Returns: 压缩后的图片的data
     public func compressImageData(maxSize:Int, byteUnits:ByteUnits) -> Data?{
         var compress:CGFloat = 1.0
-        var imageData:Data
+        var imageData:Data? = nil
         if let jpgData = self.jpegData(compressionQuality: compress) {
             imageData = jpgData
-        } else if let pngData = self.pngData() {
-            imageData = pngData
         } else { return nil }
         let byteSize = byteUnits.getBytes(maxSize)
-        while imageData.count > byteSize && compress > 0.000001 {
-            compress -= 0.001
+        var max:CGFloat = CGFloat(byteSize)
+        //compress > 0.01 compress再小也没有什么压缩效果了,所以没必要浪费时间了
+        while (imageData?.count ?? 0) > byteSize && compress > 0.01 {
+            //采用二分法尽可能减少压缩次数
+            max = compress
+            compress = max * 0.5
             guard let data = self.jpegData(compressionQuality: compress) else { break }
             imageData = data
         }
-        return imageData.count > byteSize ? nil : imageData
+        return imageData
     }
 }
 public enum ByteUnits:String {
