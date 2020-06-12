@@ -87,7 +87,7 @@ extension UIImage {
         result = UIImage(data: data)
         return result
     }
-    /// 压缩图片(尽可能的将图片的size压缩到接近maxSize，可能结果会大于maxSize)
+    /// 压缩图片(尽可能的将图片的size压缩到接近maxSize，maxSize太小的话很有可能结果会大于maxSize)
     /// - Parameters:
     ///   - maxSize: 最大size的值
     ///   - byteUnits: 最大size的单位
@@ -95,17 +95,24 @@ extension UIImage {
     public func compressImageData(maxSize:Int, byteUnits:ByteUnits) -> Data?{
         var compress:CGFloat = 1.0
         var imageData:Data? = nil
-        if let jpgData = self.jpegData(compressionQuality: compress) {
-            imageData = jpgData
-        } else { return nil }
+        guard let jpgData = self.jpegData(compressionQuality: compress) else {
+            return imageData
+        }
+        imageData = jpgData
         let byteSize = byteUnits.getBytes(maxSize)
-        var max:CGFloat = CGFloat(byteSize)
-        //compress > 0.01 compress再小也没有什么压缩效果了,所以没必要浪费时间了
-        while (imageData?.count ?? 0) > byteSize && compress > 0.01 {
+        var min:CGFloat = 0
+        var max:CGFloat = 1
+        while (imageData?.count ?? 0) > byteSize || Double(imageData?.count ?? 0) < Double(byteSize) * 0.95 {
             //采用二分法尽可能减少压缩次数
-            max = compress
-            compress = max * 0.5
+            if (imageData?.count ?? 0) > byteSize {
+                max = compress
+            }else if (imageData?.count ?? 0) < byteSize {
+                min = compress
+            }
+            compress = (max + min) * 0.5
             guard let data = self.jpegData(compressionQuality: compress) else { break }
+            //压缩到一定的程度了，继续压缩也没有效果了
+            guard imageData?.count != data.count else { break }
             imageData = data
         }
         return imageData
