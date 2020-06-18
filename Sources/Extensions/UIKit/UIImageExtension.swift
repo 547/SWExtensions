@@ -100,6 +100,9 @@ extension UIImage {
         }
         imageData = jpgData
         let byteSize = byteUnits.getBytes(maxSize)
+        guard jpgData.count > byteSize else {
+            return imageData
+        }
         var min:CGFloat = 0
         var max:CGFloat = 1
         while (imageData?.count ?? 0) > byteSize || Double(imageData?.count ?? 0) < Double(byteSize) * 0.95 {
